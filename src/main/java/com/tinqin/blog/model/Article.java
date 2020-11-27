@@ -1,15 +1,41 @@
 package com.tinqin.blog.model;
 
+import javax.persistence.*;
 import java.time.Instant;
 import java.util.Set;
 
+import static com.tinqin.blog.model.Article.ENTITY_NAME;
+import static com.tinqin.blog.model.Article.TABLE_NAME;
+
+@Entity(name = ENTITY_NAME)
+@Table(name = TABLE_NAME)
 public class Article {
 
+    public static final String ENTITY_NAME = "Article";
+    public static final String TABLE_NAME = "articles";
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
+
+    @Column(name = "title")
     private String title;
+
+    @Column(name = "content")
     private String content;
+
+    @Column(name = "category")
+    @Enumerated(EnumType.STRING)
     private CategoryType category;
+
+    @Column(name = "created_on")
     private final Instant createdOn;
+
+    @Column(name = "updated_on")
     private Instant updatedOn;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "article", fetch = FetchType.LAZY, orphanRemoval = true)
     private Set<Comment> comments;
 
     public Article(String title, String content, CategoryType category) {
@@ -57,37 +83,5 @@ public class Article {
 
     public void addComment(String content) {
         // TODO
-    }
-
-    public static class Comment {
-
-        private String content;
-        private final Instant createdOn;
-        private Instant updatedOn;
-
-        public Comment(String content) {
-            this.content = content;
-            this.createdOn = Instant.now();
-        }
-
-        public String getContent() {
-            return content;
-        }
-
-        public void setContent(String content) {
-            this.content = content;
-        }
-
-        public Instant getCreatedOn() {
-            return createdOn;
-        }
-
-        public Instant getUpdatedOn() {
-            return updatedOn;
-        }
-
-        public void setUpdatedOn(Instant updatedOn) {
-            this.updatedOn = updatedOn;
-        }
     }
 }
