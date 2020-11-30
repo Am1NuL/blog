@@ -3,11 +3,13 @@ package com.tinqin.blog.service;
 import com.tinqin.blog.model.Comment;
 import com.tinqin.blog.repository.CommentRepository;
 import exception.NotFoundException;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@Service
 public class CommentServiceImpl implements CommentService {
 
     private final CommentRepository commentRepository;
