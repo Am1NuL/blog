@@ -59,6 +59,7 @@ public class Article {
 
     public void setContent(String content) {
         this.content = content;
+        this.updatedOn = Instant.now();
     }
 
     public CategoryType getCategory() {
